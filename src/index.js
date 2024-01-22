@@ -8,9 +8,9 @@ const app = express();
 
 // Staattinen sivusto palvelimen juureen (public-kansion sisältö näkyy osositteessa http://127.0.0.1:3000/sivu.html)
 app.use(express.static('public'));
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 // Staattinen sivusto "ali-url-osoitteessa http://127.0.0.1:3000/sivusto"
 // Tarjoiltava kansio määritellään relatiivisella polulla
 app.use('/sivusto', express.static(path.join(__dirname, '../public')));
@@ -18,10 +18,10 @@ app.use('/sivusto', express.static(path.join(__dirname, '../public')));
 
 // mock data for simple API
 const items = [
-  {id: 1, name: 'Item1'},
-  {id: 2, name: 'Item2'},
-  {id: 3, name: 'Item3'},
-  {id: 4, name: 'Item4'},
+  {id: 1, name: 'Koira'},
+  {id: 2, name: 'Kissa'},
+  {id: 3, name: 'Hevonen'},
+  {id: 4, name: 'Virtahepo'},
 ];
 
 // GET http://127.0.0.1:3000/items
@@ -33,7 +33,7 @@ app.get('/items', (req, res) => {
 app.get('/items/:id', (req, res) => {
   // TODO: palauta vain se objekti, jonka on id vastaa pyydettyä
   console.log('requested item id', req.params.id);
-  let item = 'tämän tilalle oikea objekti';
+  let item = items.find((item) => item.id === parseInt(req.params.id));
   res.json(item);
 });
 
