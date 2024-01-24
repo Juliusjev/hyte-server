@@ -2,6 +2,7 @@
 import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import {deleteItem, getItemById, getItems, postItem, putItem} from './items.mjs';
 const hostname = '127.0.0.1';
 const port = 3000;
 const app = express();
@@ -16,40 +17,30 @@ const __dirname = path.dirname(__filename);
 app.use('/sivusto', express.static(path.join(__dirname, '../public')));
 
 
-// mock data for simple API
-const items = [
-  {id: 1, name: 'Koira'},
-  {id: 2, name: 'Kissa'},
-  {id: 3, name: 'Hevonen'},
-  {id: 4, name: 'Virtahepo'},
-];
-
 // GET http://127.0.0.1:3000/items
-app.get('/items', (req, res) => {
-  res.json(items);
-});
+app.get('/items', getItems);
 
 // GET http://127.0.0.1:3000/items/<ID>
-app.get('/items/:id', (req, res) => {
-  // TODO: palauta vain se objekti, jonka on id vastaa pyydettyä
-  console.log('requested item id', req.params.id);
-  let item = items.find((item) => item.id === parseInt(req.params.id));
-  res.json(item);
-});
+app.get('/items/:id', getItemById);
 
 // Itemin lisäys
 // POST http://127.0.0.1:3000/items
-app.post('/items', (req, res) => {
-  res.json({message: 'item created'});
-});
+app.post('/items', postItem);
+
+// PUT
+app.put('/items/:id', putItem);
+
+// DELETE
+app.delete('/items/:id', deleteItem);
+
 
 // GET http://127.0.0.1:3000
 // ei toimi tällä hetkellä, koska public-server tarjoilee index.html ennen tätä
 app.get('/', (req, res) => {
-  // TODO (vapaaehtoinen, jatketaan tästä ensi kerralla): lisää postattu item items-taulukkoon
   res.send('Welcome to my REST api!');
 });
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
