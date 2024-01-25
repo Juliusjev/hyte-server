@@ -69,4 +69,3 @@ const putItem = (req, res) => {
 
 
 export {getItems, getItemById, postItem, deleteItem, putItem};
-
