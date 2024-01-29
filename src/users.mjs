@@ -26,19 +26,39 @@ const users = [
   };
   
   const getUserById = (req, res) => {
-    // TODO: implement this
-    res.send('not working yet');
+    const userFound = users.find(user => user.id === Number(req.params.id));
+    if (userFound) {
+        res.json(userFound);
+    } else {
+        res.status(404).json({error: 'not found'});
+    }
   };
   
+  
   const postUser = (req, res) => {
-    // TODO: implement this
-    res.send('not working yet');
+    console.log('postUser request body', req.body);
+    if (!req.body.username || !req.body.password || !req.body.email){
+        console.log(req.body.username, req.body.password, req.body.email);
+        return res.status(400).json({error: 'information missing'});
+    }
+    const newUserId = users[users.length-1].id + 1;
+    const newUser = {id: newUserId, username: req.body.username, password: req.body.password, email: req.body.email};
+    users.push(newUser);
+    res.status(201).json(newUser);
   };
   
   const putUser = (req, res) => {
-    // TODO: implement this
-    res.send('not working yet');
+    const userIndex = users.findIndex(user => user.id === Number(req.params.id));
+    if (index === -1){
+        return res.sendStatus(404);
+    }
+    if (!req.body.name){
+        return res.status(400).json({error: 'username missing'});
+    }
+    users[user].name = req.body.name;
+    res.json({updated_item: items[index]});
   };
+
   
   // Dummy login, returns user object if username & password match
   const postLogin = (req, res) => {
@@ -60,3 +80,9 @@ const users = [
   };
   
   export {getUsers, getUserById, postUser, putUser, postLogin};
+
+
+
+
+
+  

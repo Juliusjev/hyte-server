@@ -63,7 +63,7 @@ const putItem = (req, res) => {
   if (!req.body.name){
     return res.status(400).json({error: 'item name missing'});
   }
-  items[index].name = req.body.name;;
+  items[index].name = req.body.name;
   res.json({updated_item: items[index]});
 };
 
