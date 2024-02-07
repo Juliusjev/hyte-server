@@ -1,6 +1,7 @@
 -- Create database (drop the old one if it exists)
 DROP DATABASE IF EXISTS HealthDiary;
 CREATE DATABASE HealthDiary;
+
 USE HealthDiary;
 
 -- Create a table for users
@@ -134,4 +135,5 @@ SELECT entry_date, mood, sleep_hours
 FROM DiaryEntries
 WHERE user_id = 2 AND mood = 'Stressed' AND sleep_hours < 8;
 
+-- Find top 5 most active users (in progress)
 
