@@ -1,5 +1,11 @@
 import express from 'express';
-import {deleteItem, getItemById, getItems, postItem, putItem} from '../controllers/item-controller.mjs';
+import {
+  deleteItem,
+  getItemById,
+  getItems,
+  postItem,
+  putItem,
+} from '../controllers/item-controller.mjs';
 
 const itemRouter = express.Router();
 
@@ -16,4 +22,3 @@ itemRouter.put('/:id', putItem);
 itemRouter.delete('/:id', deleteItem);
 
 export default itemRouter;
-

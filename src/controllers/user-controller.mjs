@@ -1,90 +1,83 @@
-const users = [
-    {
-      id: 1,
-      username: "johndoe",
-      password: "password1",
-      email: "johndoe@example.com"
-    },
-    {
-      id: 2,
-      username: "janedoe",
-      password: "password2",
-      email: "janedoe@example.com"
-    },
-    {
-      id: 3,
-      username: "bobsmith",
-      password: "password3",
-      email: "bobsmith@example.com"
-    }
-  ];
-  
-  // TODO: use userModel (db) instead of mock data
-  // TODO: implement route handlers below for users (real data)
-  
+import {
+  deleteUserById,
+  insertUser,
+  listAllUsers,
+  selectUserById,
+  updateUserById,
+} from '../models/user-model.mjs';
 
-  const getUsers = (req, res) => {
-    res.json(users);
-  };
-  
-  const getUserById = (req, res) => {
-    const userFound = users.find(user => user.id === Number(req.params.id));
-    if (userFound) {
-        res.json(userFound);
-    } else {
-        res.status(404).json({error: 'not found'});
-    }
-  };
-  
-  
-  const postUser = (req, res) => {
-    console.log('postUser request body', req.body);
-    if (!req.body.username || !req.body.password || !req.body.email){
-        console.log(req.body.username, req.body.password, req.body.email);
-        return res.status(400).json({error: 'information missing'});
-    }
-    const newUserId = users[users.length-1].id + 1;
-    const newUser = {id: newUserId, username: req.body.username, password: req.body.password, email: req.body.email};
-    users.push(newUser);
-    res.status(201).json(newUser);
-  };
-  
-  const putUser = (req, res) => {
-    const userIndex = users.findIndex(user => user.id === Number(req.params.id));
-    if (index === -1){
-        return res.sendStatus(404);
-    }
-    if (!req.body.name){
-        return res.status(400).json({error: 'username missing'});
-    }
-    users[user].name = req.body.name;
-    res.json({updated_item: items[index]});
-  };
+// TODO: implement route handlers below for users (real data)
 
-  
-  // Dummy login, returns user object if username & password match
-  const postLogin = (req, res) => {
-    const userCreds = req.body;
-    if (!userCreds.username || !userCreds.password) {
-      return res.sendStatus(400);
+const getUsers = async (req, res) => {
+  const result = await listAllUsers();
+  if (result.error) {
+    return res.status(result.error).json(result);
+  }
+  return res.json(result);
+};
+
+const getUserById = async (req, res) => {
+  const result = await selectUserById(req.params.id);
+  if (result.error) {
+    return res.status(result.error).json(result);
+  }
+  return res.json(result);
+};
+
+const postUser = async (req, res) => {
+  const {username, password, email} = req.body;
+  // check that all needed fields are included in request
+  if (username && password && email) {
+    const result = await insertUser(req.body);
+    if (result.error) {
+      return res.status(result.error).json(result);
     }
-    const userFound = users.find(user => user.username == userCreds.username);
-    // user not found
-    if (!userFound) {
-      return res.status(403).json({error: 'username/password invalid'});
+    return res.status(201).json(result);
+  } else {
+    return res.status(400).json({error: 400, message: 'bad request'});
+  }
+};
+
+const putUser = async (req, res) => {
+  const user_id = req.params.id;
+  const {username, password, email} = req.body;
+  // check that all needed fields are included in request
+  if (user_id && username && password && email) {
+    const result = await updateUserById({user_id, ...req.body});
+    if (result.error) {
+      return res.status(result.error).json(result);
     }
-    // check if posted password matches to user found password
-    if (userFound.password === userCreds.password) {
-      res.json({message: 'logged in successfully', user: userFound});
-    } else {
-      return res.status(403).json({error: 'username/password invalid'});
-    }
-  };
-  
-  export {getUsers, getUserById, postUser, putUser, postLogin};
+    return res.status(201).json(result);
+  } else {
+    return res.status(400).json({error: 400, message: 'bad request'});
+  }
+};
 
+const deleteUser = async (req, res) => {
+  const result = await deleteUserById(req.params.id);
+  if (result.error) {
+    return res.status(result.error).json(result);
+  }
+  return res.json(result);
+};
 
+// Dummy login with mock data, returns user object if username & password match
+const postLogin = (req, res) => {
+  const userCreds = req.body;
+  if (!userCreds.username || !userCreds.password) {
+    return res.sendStatus(400);
+  }
+  const userFound = users.find((user) => user.username == userCreds.username);
+  // user not found
+  if (!userFound) {
+    return res.status(403).json({error: 'username/password invalid'});
+  }
+  // check if posted password matches to user found password
+  if (userFound.password === userCreds.password) {
+    res.json({message: 'logged in successfully', user: userFound});
+  } else {
+    return res.status(403).json({error: 'username/password invalid'});
+  }
+};
 
-
-
-  
+export {getUsers, getUserById, postUser, putUser, postLogin, deleteUser};
