@@ -26,7 +26,8 @@ userRouter.route('/:id')
   // delete user based on id
   .delete(deleteUser);
 
+
 // user login
 userRouter.post('/login', postLogin);
 
-export default userRouter;
+export default userRouter
