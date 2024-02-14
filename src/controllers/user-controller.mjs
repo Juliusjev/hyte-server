@@ -3,10 +3,10 @@ import {
   insertUser,
   listAllUsers,
   selectUserById,
+  selectUserByNameAndPassword,
   updateUserById,
 } from '../models/user-model.mjs';
 
-// TODO: implement route handlers below for users (real data)
 
 const getUsers = async (req, res) => {
   const result = await listAllUsers();
@@ -61,23 +61,15 @@ const deleteUser = async (req, res) => {
   return res.json(result);
 };
 
-// Dummy login with mock data, returns user object if username & password match
-const postLogin = (req, res) => {
-  const userCreds = req.body;
-  if (!userCreds.username || !userCreds.password) {
-    return res.sendStatus(400);
+// INSECURE LOGIN uses harcoded passwords only
+// returns user object if username & password match
+const postLogin = async (req, res) => {
+  const {username, password} = req.body;
+  const user = await selectUserByNameAndPassword(username, password);
+  if (user.error) {
+    return res.status(user.error).json(user);
   }
-  const userFound = users.find((user) => user.username == userCreds.username);
-  // user not found
-  if (!userFound) {
-    return res.status(403).json({error: 'username/password invalid'});
-  }
-  // check if posted password matches to user found password
-  if (userFound.password === userCreds.password) {
-    res.json({message: 'logged in successfully', user: userFound});
-  } else {
-    return res.status(403).json({error: 'username/password invalid'});
-  }
+  return res.json({message: 'logged in successfully', user});
 };
 
 export {getUsers, getUserById, postUser, putUser, postLogin, deleteUser};
