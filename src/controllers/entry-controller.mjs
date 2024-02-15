@@ -8,6 +8,9 @@ import {
   
   const getEntries = async (req, res) => {
     const result = await listAllEntries();
+    // TODO: return only logged user's own entries
+    // - add listEntriesByUserId(id) to the model
+    // - get user's id from token (req.user.user_id)
     if (!result.error) {
       res.json(result);
     } else {

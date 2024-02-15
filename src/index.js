@@ -5,7 +5,9 @@ import {fileURLToPath} from 'url';
 import itemRouter from './routes/item-router.mjs';
 import userRouter from './routes/user-router.mjs';
 import entryRouter from './routes/entry-router.mjs';
+import logger from './middlewares/logger.mjs';
 import cors from 'cors';
+import authRouter from './routes/auth-router.mjs';
 const hostname = '127.0.0.1';
 const port = 3000;
 const app = express();
@@ -28,6 +30,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use('/sivusto', express.static(path.join(__dirname, '../public')));
 
+// logger middleware
+app.use(logger);
+
 // Test RESOURCE /items endpoints (just mock data for testing, not connected to any database)
 app.use('/items', itemRouter);
 
@@ -36,6 +41,9 @@ app.use('/api/entries', entryRouter);
 
 // Users resource (/api/users)
 app.use('/api/users', userRouter);
+
+// User authentication
+app.use('/api/auth', authRouter);
 
 // Start the server
 app.listen(port, hostname, () => {
