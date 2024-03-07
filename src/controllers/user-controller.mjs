@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import { validationResult } from 'express-validator';
 import {
   deleteUserById,
   insertUser,
@@ -24,39 +25,55 @@ const getUserById = async (req, res) => {
   return res.json(result);
 };
 
-const postUser = async (req, res) => {
+const postUser = async (req, res, next) => {
   const {username, password, email} = req.body;
+  const validationErrors = validationResult(req);
+  console.log('user validation errors', validationErrors)
   // check that all needed fields are included in request
-  if (username && password && email) {
+  if (validationErrors.isEmpty()) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const result = await insertUser({username, email, password: hashedPassword});
-    if (result.error) {
-      return res.status(result.error).json(result);
-    }
+    const result = await insertUser({
+      username, 
+      email,
+      password: hashedPassword
+    }, next);
     return res.status(201).json(result);
   } else {
-    return res.status(400).json({error: 400, message: 'bad request'});
+    const error = new Error('bad request');
+    error.status = 400;
+    error.errors = validationErrors.errors;
+    return next(error);
+    return res.status(400).json({error: 400, message: 'bad request', errors: validationErrors.errors});
   }
 };
 
 // Only user authenticated by token can update own data
-const putUser = async (req, res) => {
+const putUser = async (req, res, next) => {
   // Get userinfo from req.user object extracted from token 
   const user_id = req.user.user_id;
   const {username, password, email} = req.body;
+  const validationErrors = validationResult(req);
+  console.log('user validation errors', validationErrors)
   // hash password if included in request
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  // check that all needed fields are included in request
-  if (user_id && username && password && email) {
-    const result = await updateUserById({user_id, username, password: hashedPassword, email});
-    if (result.error) {
+  if (validationErrors.isEmpty()) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    // check that all needed fields are included in request
+    if (user_id && username && password && email) {
+      const result = await updateUserById({
+        user_id, 
+        username,
+        password: hashedPassword,
+        email
+      }, next);
       return res.status(result.error).json(result);
+    } else {
+      const error = new Error('bad request');
+      error.status = 400;
+      error.erros = validationErrors.errors;
+      return next(error);
     }
-    return res.status(201).json(result);
-  } else {
-    return res.status(400).json({error: 400, message: 'bad request'});
   }
 };
 
