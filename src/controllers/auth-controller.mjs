@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { selectUserByUsername } from "../models/user-model.mjs";
 import 'dotenv/config';
+import { customError } from '../middlewares/error-handler.mjs';
 
 // INSECURE LOGIN uses harcoded passwords only
 // returns user object if username & password match
@@ -19,7 +20,7 @@ const postLogin = async (req, res) => {
         const token = jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '24h'});
         return res.json({message: 'logged in successfully', user, token});
     } else {
-        return res.status(401).json({error : 401, message: 'invalid usermame or password'});
+        return next(customError('Invalid username or password', 401));
     }
   };
 
