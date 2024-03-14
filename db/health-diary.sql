@@ -70,6 +70,8 @@ INSERT INTO DiaryEntries (user_id, entry_date, mood, weight, sleep_hours, notes,
   (3, '2024-01-19', 'Exhausted', 91.0, 6, 'Feeling burnt out', '2024-01-23 22:30:00'),
   (1, '2024-01-12', 'Energetic', 70, 9, 'Slept well, feeling good', '2024-01-10 20:00:00');
 
+
+
 -- Inserting exercise data
 INSERT INTO ExerciseLog (user_id, entry_date, type_of_exercise, duration, calories_burned) VALUES
     (1, '2024-01-21', 'gym', 1.5, 350),
