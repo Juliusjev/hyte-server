@@ -8,7 +8,7 @@ import {
     listAllEntriesByUserId,
   } from '../models/entry-model.mjs';
   
-  const getEntries = async (req, res) => {
+  const getEntries = async (req, res, next) => {
     // return only logged user's own entries
     // - get user's id from token (req.user.user_id)
     const result = await listAllEntriesByUserId(req.user.user_id);
@@ -19,7 +19,7 @@ import {
     }
   };
   
-  const getEntryById = async (req, res) => {
+  const getEntryById = async (req, res, next) => {
     const entry = await findEntryById(req.params.id);
     if (entry) {
       res.json(entry);
@@ -42,7 +42,14 @@ import {
   const putEntry = async (req, res, next) => {
     const entryId = req.params.id;
     const userId = req.user.user_id;
-    const result = await updateEntryById(entryId, userId, req.body);
+    const entryData = {
+      entry_date: req.body.entry_date,
+      mood: req.body.mood,
+      weight: req.body.weight,
+      sleep_hours: req.body.sleep_hours,
+      notes: req.body.notes,
+    };
+    const result = await updateEntryById(entryId, userId, entryData);
     if (result.error) {
       return next(customError(result.message, result.error));
     }

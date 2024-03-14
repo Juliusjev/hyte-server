@@ -64,26 +64,20 @@ const addEntry = async (entry, userId) => {
 
 
 const updateEntryById = async (entryId, userId, entryData) => {
+  console.log(entryData);
+  const fieldsToUpdate = Object.keys(entryData).map(key => `${key}=?`).join(', ');
+  const values = [...Object.values(entryData), entryId, userId];
+  const sql = `UPDATE DiaryEntries SET ${fieldsToUpdate} WHERE entry_id = ? AND user_id = ?`;
+
   try {
-    const params = [entryData, entryId, userId];
-    // format() function is used to include only the fields that exists
-    // in the entryData object to the SQL query
-    const sql = promisePool.format(
-      `UPDATE DiaryEntries SET ?
-       WHERE entry_id=? AND user_id=?`,
-      params,
-    );
-    const [result] = await promisePool.query(sql, params);
-    // console.log(result);
+    const [result] = await promisePool.query(sql, values);
     if (result.affectedRows === 0) {
-      return {error: 404, message: 'Entry not found'};
+      return {error: 404, message: 'Entry not found or no permission to edit'};
     }
-    return {message: 'Entry data updated', entry_id: entryId};
+    return {message: 'Entry updated successfully', entry_id: entryId};
   } catch (error) {
-    // fix error handling
-    // now duplicate entry error is generic 500 error, should be fixed to 400 ?
-    console.error('updateEntryById', error);
-    return {error: 500, message: 'db error'};
+    console.error('Error updating entry:', error);
+    return {error: 500, message: 'Database error during entry update'};
   }
 };
 
