@@ -235,6 +235,8 @@
 - `frequency`: Lääkityksen ottofrekvenssi.
 - `start_date`: Lääkityksen aloituspäivämäärä.
 - `end_date`: Lääkityksen lopetuspäivämäärä.
+
+  
 ## Toiminnallisuudet
 
 ### index.html
@@ -382,3 +384,13 @@
 - Lisätoiminnallisuuksien rakentaminen
     - Projektin aikana tuli mieleen vaikka mitä mitä voisi vielä toteuttaa
 
+
+ ## Kuvat käyttöliittymästä
+
+ 
+
+
+
+
+
+![Näyttökuva 2024-3-17 kello 19 16 18](https://github.com/Juliusjev/hyte-server/assets/122266761/cbb864ff-1d88-4ab5-be08-0f521dc0905c)
