@@ -378,4 +378,7 @@
 
 - Medications-sivuston tekeminen
     - Jäi kokonaan toteuttamatta (keskitytty enemmän ohjelman ja frontin toimivuuteen)
+ 
+- Lisätoiminnallisuuksien rakentaminen
+    - Projektin aikana tuli mieleen vaikka mitä mitä voisi vielä toteuttaa
 
