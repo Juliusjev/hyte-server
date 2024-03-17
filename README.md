@@ -102,7 +102,7 @@
   Authorization: Bearer <token>
 ````
 
-#### Find top-5 most active users
+#### Etsi top-5 aktiivisinta käyttäjää
 ```http
   PUT http://127.0.0.1:3000/api/entries/top
 
