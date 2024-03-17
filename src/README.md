@@ -2,7 +2,9 @@
 
 **Node.js + Express** application.
 
-(Check weekly branches too.)
+(Check weekly branches too.)!
+[Note 17  Mar 2024](https://github.com/Juliusjev/hyte-server/assets/122266761/24e6f68c-3e2d-4202-9a67-a28adc63d8e8)
+
 
 ## Usage
 
