@@ -4,7 +4,6 @@ import { selectUserByUsername } from "../models/user-model.mjs";
 import 'dotenv/config';
 import { customError } from '../middlewares/error-handler.mjs';
 
-// INSECURE LOGIN uses harcoded passwords only
 // returns user object if username & password match
 const postLogin = async (req, res, next) => {
     const {username, password} = req.body;
