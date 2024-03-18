@@ -373,6 +373,30 @@
 ### medications.html
 
 - Ei ehtinyt tuotantoon
+
+ ## Kuvat käyttöliittymästä
+
+ ### index.html
+
+![Näyttökuva 2024-3-17 kello 19 16 18](https://github.com/Juliusjev/hyte-server/assets/122266761/cbb864ff-1d88-4ab5-be08-0f521dc0905c)
+
+
+### home.html
+
+![Näyttökuva 2024-3-17 kello 19 17 07](https://github.com/Juliusjev/hyte-server/assets/122266761/2bc4f514-4a87-449e-9abe-1ce78f1d644a)
+
+### entries.html
+
+![Näyttökuva 2024-3-17 kello 19 19 53](https://github.com/Juliusjev/hyte-server/assets/122266761/ccb2fe5c-4c20-4d79-92cf-9c1a3525fd19)
+
+### exerciselog.html
+
+![Näyttökuva 2024-3-17 kello 19 19 47](https://github.com/Juliusjev/hyte-server/assets/122266761/e781656f-4cce-4f40-8aa2-e11105cfa74b)
+
+### users.html
+
+![Näyttökuva 2024-3-17 kello 19 19 11](https://github.com/Juliusjev/hyte-server/assets/122266761/bbc7ccfa-6360-4362-ba76-9fc7dc9143c7)
+
 ## Bugit ja to-dot
 
 - Virheiden hallinta ei ole vielä erityisen hyvällä tasolla
@@ -384,29 +408,8 @@
 - Lisätoiminnallisuuksien rakentaminen
     - Projektin aikana tuli mieleen vaikka mitä mitä voisi vielä toteuttaa
 
+- Koodin siistiminen
 
- ## Kuvat käyttöliittymästä
-
- ### index.html
-
-![Näyttökuva 2024-3-17 kello 19 16 18](https://github.com/Juliusjev/hyte-server/assets/122266761/cbb864ff-1d88-4ab5-be08-0f521dc0905c)
-
-
-### home.html
-
-![Näyttökuva 2024-3-17 kello 19 17 07](https://github.com/Juliusjev/hyte-server/assets/122266761/2bc4f514-4a87-449e-9abe-1ce78f1d644a)
-
-### entries.html
-
-![Näyttökuva 2024-3-17 kello 19 19 53](https://github.com/Juliusjev/hyte-server/assets/122266761/ccb2fe5c-4c20-4d79-92cf-9c1a3525fd19)
-
-### exerciselog.html
-
-![Näyttökuva 2024-3-17 kello 19 19 47](https://github.com/Juliusjev/hyte-server/assets/122266761/e781656f-4cce-4f40-8aa2-e11105cfa74b)
-
-### users.html
-
-![Näyttökuva 2024-3-17 kello 19 19 11](https://github.com/Juliusjev/hyte-server/assets/122266761/bbc7ccfa-6360-4362-ba76-9fc7dc9143c7)
 
 
 
