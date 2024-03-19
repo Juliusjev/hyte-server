@@ -410,8 +410,7 @@
 
 - Koodin siistiminen
 
-
-
+- Säännöt eri näyttökooille
 
 
 
